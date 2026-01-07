@@ -20,7 +20,11 @@ func ConnectDB() error {
 	if err != nil {
 		fmt.Println("!!!ERROR CONECTANDO LA BBDD -> ", err.Error())
 	}
-	db.AutoMigrate(&entities.User{})
+	db.AutoMigrate(&entities.User{}, &entities.Cart{})
 	fmt.Println("CONEXION EXITOSA A BBDD")
 	return nil
+}
+
+func GetInstance() *gorm.DB {
+	return db
 }
