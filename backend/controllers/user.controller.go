@@ -2,13 +2,15 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
+	"io"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/test-tecnico-grupo-lagos/backend/config"
 	"github.com/test-tecnico-grupo-lagos/backend/payloads"
 	"github.com/test-tecnico-grupo-lagos/backend/services"
+	"github.com/test-tecnico-grupo-lagos/backend/utils"
 )
 
 type UserController struct {
@@ -24,8 +26,17 @@ func NewUserController() *UserController {
 func (c *UserController) HandleCreateUser(w http.ResponseWriter, r *http.Request) error {
 	defer r.Body.Close()
 	var barcodes []string
-	if err := json.NewDecoder(r.Body).Decode(&barcodes); err != nil {
-		return err
+	if r.Body == nil || r.Body == http.NoBody || r.ContentLength == 0 {
+		barcodes = []string{}
+	} else {
+		dec := json.NewDecoder(r.Body)
+		if err := dec.Decode(&barcodes); err != nil {
+			if errors.Is(err, io.EOF) {
+				barcodes = []string{}
+			} else {
+				return err
+			}
+		}
 	}
 	if barcodes == nil {
 		barcodes = []string{}
@@ -41,7 +52,7 @@ func (c *UserController) HandleCreateUser(w http.ResponseWriter, r *http.Request
 		Data:       user,
 		Error:      false,
 	}
-	return config.WriteResponse(w, status, response)
+	return utils.WriteResponse(w, status, response)
 }
 
 func (c *UserController) HandleFindUserByID(w http.ResponseWriter, r *http.Request) error {
@@ -62,5 +73,5 @@ func (c *UserController) HandleFindUserByID(w http.ResponseWriter, r *http.Reque
 		Data:       result,
 		Error:      false,
 	}
-	return config.WriteResponse(w, status, response)
+	return utils.WriteResponse(w, status, response)
 }

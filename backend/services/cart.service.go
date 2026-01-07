@@ -27,7 +27,7 @@ func (s *CartService) UpdateBarcodes(cartID uint, barcodes []string) (*entities.
 	if err := cart.SetBarcodes(barcodes); err != nil {
 		return nil, err
 	}
-	if err := s.instance.Model(&cart).Update("Barcodes", &cart).Error; err != nil {
+	if err := s.instance.Model(&cart).Update("Barcodes", cart.Barcodes).Error; err != nil {
 		return nil, err
 	}
 	return &cart, nil

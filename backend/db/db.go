@@ -16,11 +16,14 @@ func ConnectDB() error {
 	godotenv.Load()
 	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", os.Getenv("DBUSER"), os.Getenv("DBPASS"), os.Getenv("DBHOST"), os.Getenv("DBPORT"), os.Getenv("DBNAME"))
 	var err error
-	db, err := gorm.Open(mysql.Open(connectionString), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
 	if err != nil {
 		fmt.Println("!!!ERROR CONECTANDO LA BBDD -> ", err.Error())
+		return err
 	}
-	db.AutoMigrate(&entities.User{}, &entities.Cart{})
+	if err := db.AutoMigrate(&entities.User{}, &entities.Cart{}); err != nil {
+		return err
+	}
 	fmt.Println("CONEXION EXITOSA A BBDD")
 	return nil
 }

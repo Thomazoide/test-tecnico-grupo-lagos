@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/test-tecnico-grupo-lagos/backend/config"
 	"github.com/test-tecnico-grupo-lagos/backend/payloads"
 	"github.com/test-tecnico-grupo-lagos/backend/services"
+	"github.com/test-tecnico-grupo-lagos/backend/utils"
 )
 
 type CartController struct {
@@ -47,5 +47,5 @@ func (c *CartController) HandleUpdateCart(w http.ResponseWriter, r *http.Request
 		Data:       cart,
 		Error:      false,
 	}
-	return config.WriteResponse(w, status, response)
+	return utils.WriteResponse(w, status, response)
 }
