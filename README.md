@@ -21,7 +21,8 @@ Proyecto dividido en backend (Go) y frontend (React + Vite + Tailwind).
 2. Ejecutar:
 	 ```powershell
 	 cd backend
-	 go run .
+	 go build main.go
+     ./main.exe
 	 ```
 	 El servidor queda en `http://localhost:8080`.
 
@@ -42,17 +43,7 @@ frontend: `http://localhost:5173`; backend: `http://localhost:8080`.
 ## Nota
 No tuve tiempo de integrar todos los algoritmos solicitados debido a mi trabajo actual, pero fue entretenido avanzar y dejar una base funcional con paginación, filtrado en vivo y búsqueda por código.
 
-## Ejemplos Postman
-- Productos por página:
-	1) Nuevo request GET
-	2) URL: `http://localhost:8080/products/page/1`
-	3) Headers: `Accept: application/json`
-	4) Send. Respuesta envuelta en `ResponsePayload` con `data.products`.
-
-- Producto por código:
-	1) Nuevo request GET
-	2) URL: `http://localhost:8080/products/code/{code}` (ej: `737628064502`)
-	3) Headers: `Accept: application/json`
-	4) Send. Respuesta envuelta en `ResponsePayload` con `data.product`.
+## Uso de IA
+Para lo que mas la use fue para que me ayudara a crear este README
 
 
