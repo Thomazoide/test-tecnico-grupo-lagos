@@ -6,7 +6,7 @@ Proyecto dividido en backend (Go) y frontend (React + Vite + Tailwind).
 - Servidor HTTP en `:8080` con rutas:
 	- `GET /products/page/{page}`: lista productos paginados desde OpenFoodFacts.
 	- `GET /products/code/{code}`: obtiene un producto por código (OpenFoodFacts).
-	- `GET /users`, `GET /users/{id}`, `PUT /cart/{id}`: endpoints de usuarios/carrito (requieren DB).
+	- `POST /users`, `GET /users/{id}`, `PUT /cart/{id}`: endpoints de usuarios/carrito (requieren DB).
 - Conexión a MySQL vía `.env` usando GORM y migraciones para `User` y `Cart`.
 
 ### Correr backend
